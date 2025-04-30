@@ -7,6 +7,12 @@ CHANNEL_ID = int(os.environ["DISCORD_CHANNEL_ID"])
 
 client = discord.Client(intents=discord.Intents.default())
 
+# 한글 요일
+weekdays_ko = ['월', '화', '수', '목', '금']
+
+# 이모지
+emojis = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣']
+
 @client.event
 async def on_ready():
     today = datetime.date.today()
@@ -18,12 +24,12 @@ async def on_ready():
     date_range = f"{dates[0].month}/{dates[0].day} ~ {dates[-1].month}/{dates[-1].day}"
     message = f"**📢 [{date_range}] 코어타임 참석 여부 표시**\n참석할 수 있는 날짜에 반응을 남겨주세요 :>\n\n"
     for i, d in enumerate(dates):
-        message += f"{i+1}️⃣ {d.month}/{d.day}\n"
+        date_str = f"{d.month}/{d.day} ({weekdays_ko[d.weekday()]})"
+        message += f"{emojis[i]} {date_str}\n\n"
 
     channel = client.get_channel(CHANNEL_ID)
     sent_message = await channel.send(message)
 
-    emojis = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣']
     for emoji in emojis:
         await sent_message.add_reaction(emoji)
 
