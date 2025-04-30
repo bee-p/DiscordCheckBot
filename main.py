@@ -22,10 +22,11 @@ async def on_ready():
 
     # 메시지 생성
     date_range = f"{dates[0].month}/{dates[0].day} ~ {dates[-1].month}/{dates[-1].day}"
-    message = f"**📢 [{date_range}] 코어타임 참석 여부 표시**\n참석할 수 있는 날짜에 반응을 남겨주세요 :>\n\n"
+    message = f"**📢 [{date_range}] 코어타임 참석 여부 표시**\n\n"
     for i, d in enumerate(dates):
         date_str = f"{d.month}/{d.day} ({weekdays_ko[d.weekday()]})"
         message += f"{emojis[i]} {date_str}\n\n"
+    message += "참석할 수 있는 날짜에 반응을 남겨주세요 :>"
 
     channel = client.get_channel(CHANNEL_ID)
     sent_message = await channel.send(message)
